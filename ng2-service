@@ -68,3 +68,59 @@ export class FormComponent {
         this.grammars = GrammarService.getGrammar();
     }
 }
+
+---------------------------------------------------------------------------------
+1. hero.ts
+
+// 定义一个类字段格式
+export class Hero {
+    id:number;
+    name:string;
+}
+
+2. hero.list.ts
+
+import {Hero} from "./hero";
+
+export const HEROS: Hero[] = [
+    {id: 1, name: "华泰汽车"},
+    {id: 2, name: "汽车之家"},
+    {id: 3, name: "易车网"},
+    {id: 4, name: "优信二手车"}
+];
+
+3. hero.service.ts
+
+import {Injectable} from "@angular/core";
+
+import {HEROS} from "./hero.list";
+@Injectable()
+export class HeroService {
+    getHeros() {
+        return HEROS;
+    }
+}
+
+4. app.component.ts
+
+import {Component} from "@angular/core";
+// 1. 引入服务
+import {HeroService} from "./hero.service";
+@Component ({
+    selector: "my-app",
+    templateUrl: "app/templates/one.html",
+    // 2. 组件加载服务
+    providers: [HeroService]
+})
+export class AppComponent {
+    heros = [];
+    selectName = "";
+
+    onSelect(hero) {
+        this.selectName = hero;
+    }
+    // 3. 构造函数提供服务数据, 调用服务中的方法
+    constructor(private heroService: HeroService) {
+        this.heros = heroService.getHeros();
+    }
+}
