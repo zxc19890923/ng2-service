@@ -1,4 +1,5 @@
 1. 创建对象字段类型文件 grammar.ts
+
 // 定义类的语法
 export class Grammar {
     id: number;
@@ -9,6 +10,7 @@ export class Grammar {
 }
 
 2. 根据字段类型创建对象 in-grammar.ts
+
 import {Grammar} from "./grammar";
 // 暴露这个数组, GRAMMAR在 被别的导出时候用, 名称
 export var Grammars: Grammar[] = [
@@ -20,6 +22,7 @@ export var Grammars: Grammar[] = [
 ];
 
 3. 创建服务，导入对象 grammar.service.ts
+
 import {Injectable} from "@angular/core";
 
 import {Grammars} from "./in-grammar";
@@ -34,6 +37,7 @@ export class GrammarService {
 }
 
 4. 在ngModel中导入全局的服务， 或者在component中导入这个组件和子组件可用的服务
+
 import {Component} from "@angular/core";
 
 // 导入自定义服务, 在组建中导入服务,注册服务是局部的, 只在这个组件中有效。
