@@ -1,0 +1,66 @@
+1. 创建对象字段类型文件 grammar.ts
+// 定义类的语法
+export class Grammar {
+    id: number;
+    name: string;
+    sex: string;
+    age: number;
+    address: string;
+}
+
+2. 根据字段类型创建对象 in-grammar.ts
+import {Grammar} from "./grammar";
+// 暴露这个数组, GRAMMAR在 被别的导出时候用, 名称
+export var Grammars: Grammar[] = [
+    {id: 1, name: "zhangxuchao", sex: "male", age: 27, address: "beijing china"},
+    {id: 2, name: "heping", sex: "female", age: 26, address: "beijing china"},
+    {id: 3, name: "liuzengyun", sex: "female", age: 26, address: "beijing china"},
+    {id: 4, name: "liyifan", sex: "female", age: 27, address: "beijing china"},
+    {id: 5, name: "changbirong", sex: "female", age: 26, address: "beijing china"},
+];
+
+3. 创建服务，导入对象 grammar.service.ts
+import {Injectable} from "@angular/core";
+
+import {Grammars} from "./in-grammar";
+// 暂时没有配置
+@Injectable()
+// 依赖服务都是对象
+export class GrammarService {
+    // 对象里面的额方法, 返回数组对象
+    getGrammar() {
+        return Grammars;
+    }
+}
+
+4. 在ngModel中导入全局的服务， 或者在component中导入这个组件和子组件可用的服务
+import {Component} from "@angular/core";
+
+// 导入自定义服务, 在组建中导入服务,注册服务是局部的, 只在这个组件中有效。
+// import {Grammar} from "./grammar";
+import {GrammarService} from "./grammar.service";
+
+// 导入定义对象的组件
+// import {Hero} from "./hero.component";
+@Component({
+    selector: "my-form",
+    templateUrl: "app/templates/two.html",
+    providers: [GrammarService]
+})
+export class FormComponent {
+    pawyer = ["huatai", "tengxun", "yiche", "wangyi"];
+    // model = new Hero(1, "zxc", "beijing china", "男");
+    submited = false;
+
+    onSub() {
+        this.submited = true;
+    }
+
+    model = {name: "zxc", address: "beijin china"};
+
+
+    grammars = [];
+    constructor(GrammarService:GrammarService) {
+        this.grammars = GrammarService.getGrammar();
+    }
+}
